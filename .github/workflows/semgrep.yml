@@ -14,4 +14,9 @@ jobs:
         run: pip install semgrep
 
       - name: Run custom rule
-        run: semgrep --config rule.yml .github/workflows/
+        run: semgrep --config rule.yml .github/workflows/ --sarif -o results.sarif || true
+
+      - name: Upload results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
