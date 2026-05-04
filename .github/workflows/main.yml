@@ -1,0 +1,17 @@
+name: Semgrep
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Run custom rule
+        run: semgrep --config rule.yml .github/workflows/
