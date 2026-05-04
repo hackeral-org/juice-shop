@@ -1,0 +1,19 @@
+# Checks .github/workflows/v08_unpinned_third_party.yml
+rules:
+  - id: gh-actions-v08-unpinned-third-party
+    message: Third-party action is not pinned to an immutable commit SHA.
+    severity: WARNING
+    languages:
+      - yaml
+    paths:
+      include:
+        - ".github/**"
+        - "workflows/**"
+    pattern-regex: '(?i)uses\s*:\s*(?!actions/|github/|\.\/)[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@(?!(?:[0-9a-f]{40})\b)[^\s#]+'
+    metadata:
+      help: |
+        ## Summary
+        Using a tag or branch for third-party actions can be changed upstream, risking supply-chain compromise.
+
+        ## Remediation
+        Pin to a full 40-character commit SHA (e.g., uses: owner/repo@<sha>) and monitor upstream changes.
